@@ -1,0 +1,46 @@
+body {
+  background: #d9eafd;
+}
+
+form.container {
+  width: clamp(400px, 40vw, 1500px);
+}
+
+h1 {
+  text-align: center;
+  display: inline;
+}
+
+img.logo {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.headings p {
+  margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+dialog div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

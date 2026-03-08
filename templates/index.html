@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVD Detector</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+<!-- Header -->
+<section class="bg-teal-600 text-white py-10">
+<div class="max-w-4xl mx-auto px-4 text-center">
+<h1 class="text-4xl font-bold mb-2">Cardiovascular Disease Detection</h1>
+<p class="text-lg">AI-Powered Screening with ECG Images or Clinical Parameters</p>
+</div>
+</section>
+
+<!-- Intro -->
+<section class="py-8 px-4 max-w-4xl mx-auto">
+<h2 class="text-2xl font-semibold mb-4">Understanding Cardiovascular Disease</h2>
+
+<p class="mb-4">
+Cardiovascular disease (CVD) is one of the leading causes of death worldwide.
+Early detection can significantly improve treatment outcomes.
+</p>
+
+<p class="mb-4">
+This system uses Artificial Intelligence to predict heart conditions using either
+an ECG image or basic clinical health parameters.
+</p>
+
+<p class="font-semibold text-gray-700">Try the AI models below.</p>
+</section>
+
+<!-- Prediction Section -->
+<section class="bg-white py-8 px-8 max-w-4xl mx-auto shadow rounded-lg mb-10">
+
+<h3 class="text-xl font-semibold mb-6">Test Yourself</h3>
+
+<!-- ECG Image Upload -->
+<div class="mb-8">
+
+<h4 class="text-lg font-medium mb-3">Option 1: Upload ECG Image</h4>
+
+<form method="POST" enctype="multipart/form-data" class="flex flex-col gap-3">
+<input type="file" name="image" class="p-2 border rounded" required>
+
+<button type="submit"
+class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded w-fit">
+Predict from Image
+</button>
+</form>
+
+{% if cnn_prediction %}
+
+<div class="mt-6">
+
+<p class="text-lg font-semibold mb-2">
+Prediction: <span class="text-teal-600">{{ cnn_prediction }}</span>
+</p>
+
+<p class="font-semibold mb-2">Confidence Breakdown</p>
+
+{% for label, value in confidences.items() %}
+
+<div class="mb-3">
+
+<div class="flex justify-between text-sm mb-1">
+<span class="{% if label == cnn_prediction %}font-bold text-teal-700{% endif %}">
+{{ label }}
+</span>
+<span>{{ "%.2f"|format(value) }}%</span>
+</div>
+
+<div class="w-full bg-gray-200 h-3 rounded">
+<div class="bg-teal-600 h-3 rounded" style="width: {{ value }}%"></div>
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+<hr class="my-8 border-gray-300">
+
+<!-- Clinical Data Input -->
+
+<div>
+
+<h4 class="text-lg font-medium mb-4">Option 2: Enter Clinical Parameters</h4>
+
+<form method="POST" class="grid grid-cols-2 gap-4">
+
+<div>
+<label class="block text-sm font-medium">Age</label>
+<input type="number" name="age" class="p-2 border rounded w-full">
+</div>
+
+<div>
+<label class="block text-sm font-medium">Height (cm)</label>
+<input type="number" name="height" class="p-2 border rounded w-full">
+</div>
+
+<div>
+<label class="block text-sm font-medium">Weight (kg)</label>
+<input type="number" name="weight" class="p-2 border rounded w-full">
+</div>
+
+<div>
+<label class="block text-sm font-medium">Gender</label>
+<select name="gender" class="p-2 border rounded w-full">
+<option value="1">Female</option>
+<option value="2">Male</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium">Systolic BP (ap_hi)</label>
+<input type="number" name="ap_hi" class="p-2 border rounded w-full">
+</div>
+
+<div>
+<label class="block text-sm font-medium">Diastolic BP (ap_lo)</label>
+<input type="number" name="ap_lo" class="p-2 border rounded w-full">
+</div>
+
+<div>
+<label class="block text-sm font-medium">Cholesterol</label>
+<select name="cholesterol" class="p-2 border rounded w-full">
+<option value="1">Normal</option>
+<option value="2">Above Normal</option>
+<option value="3">Well Above Normal</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium">Glucose</label>
+<select name="gluc" class="p-2 border rounded w-full">
+<option value="1">Normal</option>
+<option value="2">Above Normal</option>
+<option value="3">Well Above Normal</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium">Smoking</label>
+<select name="smoke" class="p-2 border rounded w-full">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium">Alcohol</label>
+<select name="alco" class="p-2 border rounded w-full">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
+
+<div>
+<label class="block text-sm font-medium">Physically Active</label>
+<select name="active" class="p-2 border rounded w-full">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
+
+<div class="col-span-2">
+<button type="submit"
+class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded">
+Predict from Data
+</button>
+</div>
+
+</form>
+
+{% if lr_prediction %}
+<p class="mt-4 text-green-600 font-semibold">
+Prediction: {{ lr_prediction }}
+</p>
+{% endif %}
+
+</div>
+
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-sm text-gray-500 mb-6">
+2025 Cardiovascular Detector by Manmeet Singh & Sayan Upadhyay
+</footer>
+
+</body>
+</html>
