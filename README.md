@@ -16,11 +16,15 @@ The system provides **two independent prediction methods**:
 
 Uses patient health parameters such as age, blood pressure, cholesterol levels, and lifestyle factors to predict cardiovascular disease risk.
 
+Dataset used: https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset/data
+
 ### 2. ECG Image Prediction
 
 Uses a Convolutional Neural Network (CNN) to classify ECG reports into different cardiac conditions based on waveform patterns.
 
 Users can either **upload an ECG image** or **enter clinical health parameters** to obtain predictions.
+
+Dataset used: https://www.kaggle.com/datasets/evilspirit05/ecg-analysis
 
 ---
 
